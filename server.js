@@ -133,6 +133,90 @@ app.get("/api/orders/count", async (req, res) => {
   }
 });
 
+app.get("/api/alerts/issues/count", async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT count(id) FROM alerts WHERE type = 'issues'"
+    );
+
+    res.json({
+      totalIssues: Number(result.rows[0].count)
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Failed to retrieve issues count"
+    });
+  }
+});
+
+app.get("/api/alerts/issues", async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT * FROM alerts WHERE type = 'issues'"
+    );
+
+    res.json(result.rows);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Failed to retrieve issues"
+    });
+  }
+});
+
+app.get("/api/alerts/notifications/count", async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT count(id) FROM alerts WHERE type = 'notifications'"
+    );
+
+    res.json({
+      totalNotifications: Number(result.rows[0].count)
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Failed to retrieve notifications count"
+    });
+  }
+});
+
+app.get("/api/alerts/notifications", async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT * FROM alerts WHERE type = 'notifications'"
+    );
+
+    res.json(result.rows);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Failed to retrieve notifications"
+    });
+  }
+});
+
+app.get("/api/alerts/tasks", async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT * FROM alerts WHERE type = 'tasks'"
+    );
+
+    res.json(result.rows);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Failed to retrieve tasks"
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
